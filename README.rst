@@ -2,14 +2,13 @@
 api_insee
 =========
 
-
-Add a short description here!
-
+Python helper to request Sirene Api on api.insee.fr
 
 Description
 ===========
 
-A longer description of your project goes here...
+API Sirene give access to French companies and business database. Theses entities are recorded since the creation
+of this administrative register in 1973. For more information __ https://api.insee.fr/
 
 
 Note

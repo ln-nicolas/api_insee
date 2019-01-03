@@ -5,6 +5,4 @@ Changelog
 Version 0.1
 ===========
 
-- Feature A added
-- FIX: nasty bug #1729 fixed
-- add your changes here!
+- api_insee : a python helper to request sirene API on api.insee.fr
