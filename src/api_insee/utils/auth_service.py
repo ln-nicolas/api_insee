@@ -1,6 +1,6 @@
 from api_insee.utils.client_credentials import ClientCredentials
 from api_insee.utils.client_token import ClientToken
-from api_insee.request.request_token import RequestToken
+from api_insee.request.request_token import RequestTokenService
 
 class AuthService():
 
@@ -15,5 +15,5 @@ class AuthService():
         self.generateToken()
 
     def generateToken(self):
-        data = RequestToken(self.credentials).get()
+        data = RequestTokenService(self.credentials).get()
         self.token = ClientToken(**data)

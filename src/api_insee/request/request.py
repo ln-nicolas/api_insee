@@ -10,18 +10,16 @@ from api_insee.exeptions.request_exeption import RequestExeption
 import api_insee.criteria as Criteria
 
 
-class Request():
+class RequestService():
 
     _url_params = {}
 
-    def __init__(self, *args):
-
-        if isinstance(args[0], dict):
-            self.init_criteria_from_dictionnary(args[0])
-        else:
-            self.init_criteria_from_criteria(*args)
+    def __init__(self, *args, **kwargs):
 
         self._url_params = {}
+
+        for (key, value) in kwargs.items():
+            self.set_url_params(key, value)
 
     def init_criteria_from_dictionnary(self, dictionnary):
         self.criteria = Criteria.List(*[
@@ -90,7 +88,29 @@ class Request():
         return self._url_params.copy()
 
     def set_url_params(self, name, value):
-        self._url_params[name] = value
+
+        if isinstance(value, dict):
+            criteria = Criteria.List(*[
+                Criteria.Field(key, value)
+               for (key, value) in value.items()
+           ]).toURLParams()
+
+        elif isinstance(value, list) or \
+             isinstance(value, tuple):
+            criteria = Criteria.List(*value).toURLParams()
+
+        elif isinstance(value, str) or \
+             isinstance(value, int) or \
+             isinstance(value, float):
+            criteria = Criteria.Raw(str(value)).toURLParams()
+
+        elif isinstance(value, Criteria.Base):
+            criteria = value.toURLParams()
+
+        else:
+            raise Exception
+
+        self._url_params[name] = criteria
 
     @property
     def data(self):
@@ -102,22 +122,6 @@ class Request():
             'Accept' : 'application/json',
             'Authorization' : 'Bearer %s' % (self.token.access_token)
         }
-
-    def pages(self, by_page=100):
-
-        cursor = False
-        next_cursor = "*"
-        self.set_url_params('nombre', by_page)
-
-        while cursor != next_cursor:
-            self.set_url_params('curseur', next_cursor)
-            page = self.get()
-
-            yield page
-
-            cursor = page['header']['curseur']
-            next_cursor = page['header']['curseurSuivant']
-
 
 
     def catchHTTPError(self, error):

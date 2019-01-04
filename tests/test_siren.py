@@ -33,7 +33,7 @@ def test_siren_search():
 def test_siren_raw_search():
 
     criteria = Criteria.Raw('unitePurgeeUniteLegale:True')
-    request  = api.siren(criteria)
+    request  = api.siren(q=criteria)
     results  = request.get()
 
     assert results['header']['statut'] == 200
@@ -43,7 +43,7 @@ def test_siren_raw_search():
 def test_siren_search_by_field():
 
     criteria = Criteria.Field('unitePurgeeUniteLegale',True)
-    request  = api.siren(criteria)
+    request  = api.siren(q=criteria)
     results  = request.get()
 
     assert results['header']['statut'] == 200
@@ -59,16 +59,16 @@ def test_siren_search_date():
 def test_siren_search_with_2_criteria():
 
     request = api.siren(
-        Criteria.Field('codeCommuneEtablissement', 92046),
-        Criteria.Field('unitePurgeeUniteLegale', True)
+        q = (Criteria.Field('codeCommuneEtablissement', 92046),
+        Criteria.Field('unitePurgeeUniteLegale', True))
     )
 
     assert request.url == base_siren_url + '/?q=codeCommuneEtablissement:92046 AND unitePurgeeUniteLegale:True'
 
 def test_siren_search_with_2_criteria_and_date():
     request = api.siren(
-        Criteria.Field('codeCommuneEtablissement', 92046),
-        Criteria.Field('unitePurgeeUniteLegale', True),
+        q = (Criteria.Field('codeCommuneEtablissement', 92046),
+        Criteria.Field('unitePurgeeUniteLegale', True)),
         date='2018-01-01'
     )
 
@@ -78,7 +78,7 @@ def test_siren_search_with_2_criteria_and_date():
 
 def test_siren_search_from_dic_criteria():
 
-    request = api.siren({
+    request = api.siren(q={
         'unitePurgeeUniteLegale' : True,
         'codeCommuneEtablissement' : 92046
     })
@@ -91,7 +91,7 @@ def test_siren_search_from_dic_criteria():
 def test_siren_search_with_period_variable():
 
     request = api.siren(
-        Criteria.PeriodicField('etatAdministratifUniteLegale','C')
+        q=Criteria.PeriodicField('etatAdministratifUniteLegale','C')
     )
 
     assert request.url == base_siren_url + '/?q=periode(etatAdministratifUniteLegale:C)'
@@ -99,8 +99,8 @@ def test_siren_search_with_period_variable():
 def test_siren_search_with_not_operator():
 
     request = api.siren(
-        -(-Criteria.Field('codeCommuneEtablissement', 92046)),
-        -Criteria.Field('unitePurgeeUniteLegale', True)
+        q=(-(-Criteria.Field('codeCommuneEtablissement', 92046)),
+        -Criteria.Field('unitePurgeeUniteLegale', True))
     )
 
     assert request.url == base_siren_url + '/?q=codeCommuneEtablissement:92046 AND -unitePurgeeUniteLegale:True'
@@ -108,7 +108,7 @@ def test_siren_search_with_not_operator():
 def test_siren_search_with_periodic_list():
 
     request = api.siren(
-        Criteria.Periodic(
+        q=Criteria.Periodic(
             Criteria.Field('activitePrincipaleUniteLegale','84.23Z'),
             Criteria.Field('activitePrincipaleUniteLegale','86.21Z')
         )
@@ -119,7 +119,7 @@ def test_siren_search_with_periodic_list():
 def test_siren_search_with_periodic_list_with_or():
 
     request = api.siren(
-        Criteria.Periodic(
+        q=Criteria.Periodic(
             Criteria.Field('activitePrincipaleUniteLegale','84.23Z'),
             Criteria.Field('activitePrincipaleUniteLegale','86.21Z'),
             Criteria.Field('activitePrincipaleUniteLegale','87.21Z'),
@@ -133,7 +133,7 @@ def test_siren_search_with_periodic_list_with_or():
 def test_siren_search_with_periodic_list_and_operators():
 
     request = api.siren(
-        Criteria.Periodic(
+        q=Criteria.Periodic(
             Criteria.Field('activitePrincipaleUniteLegale','84.23Z') |
             Criteria.Field('activitePrincipaleUniteLegale','86.21Z') &
             Criteria.Field('activitePrincipaleUniteLegale','87.21Z')
@@ -145,7 +145,7 @@ def test_siren_search_with_periodic_list_and_operators():
 def test_siren_search_with_periodic_list_and_operators_excluding():
 
     request = api.siren(
-        Criteria.Periodic(
+        q= Criteria.Periodic(
             Criteria.Field('activitePrincipaleUniteLegale','84.23Z') |
             Criteria.Field('activitePrincipaleUniteLegale','86.21Z')
         ) &
@@ -158,7 +158,7 @@ def test_siren_search_with_periodic_list_and_operators_excluding():
 def test_siren_search_exact_field():
 
     request = api.siren(
-        Criteria.Periodic(Criteria.FieldExact('denominationUniteLegale','LE TIMBRE'))
+        q=Criteria.Periodic(Criteria.FieldExact('denominationUniteLegale','LE TIMBRE'))
     )
 
     assert request.url == base_siren_url + '/?q=periode(denominationUniteLegale:"LE TIMBRE")'
@@ -166,7 +166,7 @@ def test_siren_search_exact_field():
 def test_siren_search_with_including_borne():
 
     request = api.siren(
-        Criteria.Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')
+        q=Criteria.Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')
     )
 
     assert request.url == base_siren_url + '/?q=nomUsageUniteLegale:[DUPONT TO DURANT]'
@@ -174,7 +174,7 @@ def test_siren_search_with_including_borne():
 def test_siren_search_with_excluding_borne():
 
     request = api.siren(
-        Criteria.Range('nomUsageUniteLegale', 'DUPONT', 'DURANT', exclude=True)
+        q=Criteria.Range('nomUsageUniteLegale', 'DUPONT', 'DURANT', exclude=True)
     )
 
     assert request.url == base_siren_url + '/?q=nomUsageUniteLegale:%7BDUPONT TO DURANT%7D'

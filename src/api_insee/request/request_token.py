@@ -3,10 +3,9 @@ import urllib.error as ue
 import json
 
 from api_insee.conf import API_VERSION
-from .request import Request
+from .request import RequestService
 
-
-class RequestToken(Request):
+class RequestTokenService(RequestService):
 
     def __init__(self, credentials):
         self.credentials = credentials

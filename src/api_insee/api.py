@@ -1,5 +1,5 @@
 from api_insee.utils.auth_service import AuthService
-from api_insee.request.request_siren import RequestSiren
+from api_insee.request.request_entreprises import RequestEntrepriseServiceSiren, RequestEntrepriseServiceSiret
 
 class ApiInsee():
 
@@ -10,7 +10,8 @@ class ApiInsee():
             secret = secret
         )
 
-        self.use('siren', RequestSiren)
+        self.use('siren', RequestEntrepriseServiceSiren)
+        self.use('siret', RequestEntrepriseServiceSiret)
 
     def use(self, serviceName, requestService):
 
