@@ -13,7 +13,7 @@ You will find the official documentation [here](https://api.insee.fr/catalogue/s
 You can install the helper with pip
 
 ```
-pip install api_insee
+pip install api-insee
 ```
 
 To use the api within a python script
