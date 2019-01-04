@@ -4,7 +4,7 @@
 import pytest
 import conftest as conf
 
-from api_insee.api import ApiInsee
+from api_insee import ApiInsee
 from api_insee.exeptions.auth_exeption import AuthExeption
 
 __author__ = "Lenselle Nicolas"
