@@ -87,7 +87,7 @@ to get all siren entities with ```codeCommuneEtablissement``` egal to ```92046``
 data = api.siren(q='unitePurgeeUniteLegage:True').get()
 ```
 
-```api_insee``` comes with ```Criteria``` helper to help you to write theses request.
+```api_insee``` comes with ```Criteria``` to help you to write theses requests.
 
 ```python
 import api_insee.criteria as Criteria
