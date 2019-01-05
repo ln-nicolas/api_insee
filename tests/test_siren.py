@@ -88,6 +88,25 @@ def test_siren_search_from_dic_criteria():
         or request.url == base_siren_url + '/?q=unitePurgeeUniteLegale:True AND codeCommuneEtablissement:92046'
     )
 
+def test_siren_search_with_operators():
+
+    request = api.siren(q=Criteria.Field('codeCommuneEtablissement', 92046) | Criteria.Field('unitePurgeeUniteLegale', True))
+
+    assert (
+        request.url == base_siren_url + '/?q=codeCommuneEtablissement:92046 OR unitePurgeeUniteLegale:True'
+    )
+
+def test_siren_search_with_operators_or_and_parentheses():
+
+    request = api.siren(q=(
+        (Criteria.Field('codeCommuneEtablissement', 92046) | Criteria.Field('unitePurgeeUniteLegale', True)) &
+         Criteria.Field('codeCommuneEtablissement', 92046)
+    ))
+
+    assert (
+        request.url == base_siren_url + '/?q=codeCommuneEtablissement:92046 OR unitePurgeeUniteLegale:True AND codeCommuneEtablissement:92046'
+    )
+
 def test_siren_search_with_period_variable():
 
     request = api.siren(
