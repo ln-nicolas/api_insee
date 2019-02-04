@@ -30,11 +30,13 @@ class RequestEntrepriseService(RequestService):
           + ('/%s/' % self.reference if self.reference else '/')
         )
 
-    def pages(self, by_page=100):
+    def pages(self, nombre=100):
 
         cursor = False
         next_cursor = "*"
-        self.set_url_params('nombre', by_page)
+
+        nombre = self._url_params.get('nombre', nombre)
+        self.set_url_params('nombre', nombre)
 
         while cursor != next_cursor:
             self.set_url_params('curseur', next_cursor)

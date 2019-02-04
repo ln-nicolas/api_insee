@@ -186,8 +186,7 @@ data = api.siren(q=Criteria.Range('nomUsageUniteLegale', 'DUPONT', 'DURANT', exc
 
 #### Pagination
 
-To specify the number of results per page use the ```nombre``` argument. The ```pages()``` method return an iterator
-to let you fetch pages from the api.
+The ```pages()``` method return an iterator to let you fetch pages from the api. To specify the number of results per page use the ```nombre``` argument. Results are limited by 10000 per pages.
 
 ```python
 from api_insee import ApiInsee
@@ -199,7 +198,7 @@ api = ApiInsee(
 
 request = api.siren(q={
     'categorieEntreprise': 'PME'
-}, nombre= 100)
+})
 
-for (page_index, page_result) in enumerate(request.pages()):
+for (page_index, page_result) in enumerate(request.pages(nombre=1000)):
     # process page_result
