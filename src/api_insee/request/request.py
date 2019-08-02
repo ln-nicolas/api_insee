@@ -1,4 +1,4 @@
-
+import ssl
 import urllib.request as ur
 import urllib.parse as up
 import urllib.error as ue
@@ -10,7 +10,7 @@ from api_insee.exeptions.request_exeption import RequestExeption
 import api_insee.criteria as Criteria
 
 
-class RequestService():
+class RequestService(object):
 
     _url_params = {}
 
@@ -34,16 +34,15 @@ class RequestService():
         self.token = token
 
     def get(self):
-
         try:
             request  = self.getRequest()
-            response = ur.urlopen(request)
+            gcontext = ssl.SSLContext()
+            response = ur.urlopen(request, context=gcontext)
             return self.formatResponse(response)
         except ue.HTTPError as EX:
             self.catchHTTPError(EX)
         except Exception as EX:
             raise Exception(self.url_encoded)
-
 
     def getRequest(self):
 
