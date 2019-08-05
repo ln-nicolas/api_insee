@@ -25,7 +25,6 @@ api = ApiInsee(
     key = # your consumer key,
     secret = # your consumer secret
 )
-
 ```
 
 #### Siren and Siret service
