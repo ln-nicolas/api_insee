@@ -24,7 +24,6 @@ def test_unauthorized_credentials():
             secret= conf.SIRENE_API_CONSUMER_SECRET
         )
 
-
 def test_generate_token():
 
     api = ApiInsee(

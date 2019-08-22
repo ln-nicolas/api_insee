@@ -21,7 +21,7 @@ api = ApiInsee(
 
 base_siren_url = API_VERSION['url'] + API_VERSION['path_siren']
 
-def test_request_first_pages():
+def test_request_first_pages(execute_request):
 
     request = api.siren(
         Criteria.Raw('*')
@@ -36,7 +36,9 @@ def test_request_first_pages():
     assert first['header']['curseur'] == '*'
     assert first['header']['curseurSuivant']
 
-def test_request_iterate_on_pages():
+    execute_request(request)
+
+def test_request_iterate_on_pages(execute_request):
 
     request = api.siren(
         Criteria.Raw('*')
@@ -50,3 +52,4 @@ def test_request_iterate_on_pages():
 
 
     assert cursors[0] != cursors[1] and cursors[1] != cursors[2]
+
