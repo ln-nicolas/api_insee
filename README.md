@@ -12,9 +12,7 @@ You will find the official documentation [here](https://api.insee.fr/catalogue/s
 
 You can install the helper with pip
 
-```
-pip install api-insee
-```
+`pip install api-insee`
 
 To use the api within a python script
 
@@ -80,13 +78,13 @@ data = api.siren('005520135', date='2018-01-01').get()
 #### Multicriteria search
 
 Sirene API let you search entities using 'q' url parameter. For example
-to get all siren entities with ```codeCommuneEtablissement``` egal to ```92046``` you can do this request
+to get all siren entities with `codeCommuneEtablissement` egal to `92046` you can do this request
 
 ```python
 data = api.siren(q='unitePurgeeUniteLegage:True').get()
 ```
 
-```api_insee``` comes with ```Criteria``` to help you to write theses requests.
+`api_insee` comes with `Criteria` to help you to write theses requests.
 
 ```python
 import api_insee.criteria as Criteria
@@ -103,7 +101,7 @@ data = api.siren(q=Criteria.Field('unitePurgeeUniteLegale', True)).get()
 # /?q=unitePurgeeUniteLegale:True
 ```
 
-you can combine several criteria together. By default the ```AND``` operator
+you can combine several criteria together. By default the `AND` operator
 is used between each criteria.
 
 ```python
@@ -140,7 +138,7 @@ data = api.siren(q=(
 # /?q=codeCommuneEtablissement:92046 OR unitePurgeeUniteLegale:True
 ```
 
-```-``` is used as ```NOT``` operator
+`-` is used as `NOT` operator
 
 ```python
 data = api.siren(q=-Criteria.Field('codeCommuneEtablissement', 92046)).get()
@@ -159,7 +157,7 @@ data = api.siren(q=Criteria.FieldExact('demoninationUniteLegale','LE TIMBRE')).g
 
 ##### Criteria.Periodic
 
-Periodic Field can be search with ```Criteria.Periodic```
+Periodic Field can be search with `Criteria.Periodic`
 
 ```python
 
@@ -185,7 +183,7 @@ data = api.siren(q=Criteria.Range('nomUsageUniteLegale', 'DUPONT', 'DURANT', exc
 
 #### Pagination
 
-The ```pages()``` method return an iterator to let you fetch pages from the api. To specify the number of results per page use the ```nombre``` argument. Results are limited by 10000 per pages.
+The `pages()` method return an iterator to let you fetch pages from the api. To specify the number of results per page use the `nombre` argument. Results are limited by 10000 per pages.
 
 ```python
 from api_insee import ApiInsee

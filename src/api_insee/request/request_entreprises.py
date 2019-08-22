@@ -27,7 +27,7 @@ class RequestEntrepriseService(RequestService):
         return (
             API_VERSION['url']
           + self.path
-          + ('/%s/' % self.reference if self.reference else '/')
+          + ('/%s' % self.reference if self.reference else '')
         )
 
     def pages(self, nombre=100):
