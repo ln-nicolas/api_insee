@@ -4,7 +4,10 @@ import json
 
 from api_insee.conf import API_VERSION
 import api_insee.criteria as Criteria
+from api_insee.exeptions.request_exeption import RequestExeption
 from .request import RequestService
+
+
 
 #from api_insee.exeptions.params_exeption import ParamsExeption
 
@@ -31,6 +34,9 @@ class RequestEntrepriseService(RequestService):
         )
 
     def pages(self, nombre=100):
+
+        if self.format == 'csv':
+            raise RequestExeption('You cannot use csv format with cursor')
 
         cursor = False
         next_cursor = "*"

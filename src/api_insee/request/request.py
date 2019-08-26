@@ -13,6 +13,7 @@ import api_insee.criteria as Criteria
 class RequestService(object):
 
     _url_params = {}
+    _accept_format = 'application/json'
 
     def __init__(self, *args, **kwargs):
 
@@ -33,7 +34,11 @@ class RequestService(object):
     def useToken(self, token):
         self.token = token
 
-    def get(self):
+    def get(self, format=None):
+
+        if format:
+            self.format = format
+
         try:
             request  = self.getRequest()
             gcontext = ssl.SSLContext()
@@ -53,9 +58,21 @@ class RequestService(object):
         )
 
     def formatResponse(self, response):
-        raw    = response.read().decode('utf-8')
+
+        if self.format == 'json':
+            return self.formatResponseJson(response)
+
+        if self.format == 'csv':
+            return self.formatResponseCsv(response)
+
+    def formatResponseJson(self, response):
+        raw = response.read().decode('utf-8')
         parsed = json.loads(raw)
         return parsed
+
+    def formatResponseCsv(self, response):
+        raw = response.read().decode('utf-8')
+        return raw
 
     @property
     def url(self):
@@ -118,10 +135,23 @@ class RequestService(object):
     @property
     def header(self):
         return {
-            'Accept' : 'application/json',
+            'Accept' : self._accept_format,
             'Authorization' : 'Bearer %s' % (self.token.access_token)
         }
 
+    @property
+    def format(self):
+        if self._accept_format == 'application/json':
+            return 'json'
+        if self._accept_format == 'text/csv':
+            return 'csv'
+
+    @format.setter
+    def format(self, value):
+        if value == 'csv':
+            self._accept_format = 'text/csv'
+        if value == 'json':
+            self._accept_format == 'application/json'
 
     def catchHTTPError(self, error):
 

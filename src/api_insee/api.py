@@ -3,12 +3,13 @@ from api_insee.request.request_entreprises import RequestEntrepriseServiceSiren,
 
 class ApiInsee():
 
-    def __init__(self, key, secret):
+    def __init__(self, key, secret, format='json'):
 
         self.auth = AuthService(
             key = key,
             secret = secret
         )
+        self.format = format
 
         self.use('siren', RequestEntrepriseServiceSiren)
         self.use('siret', RequestEntrepriseServiceSiret)
@@ -17,6 +18,7 @@ class ApiInsee():
 
         def wrap(*args, **kwargs):
             service = requestService(*args, **kwargs)
+            service.format = self.format
             service.useToken(self.auth.token)
             return service
 
