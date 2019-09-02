@@ -5,8 +5,8 @@ Entities are recorded since the creation of this administrative register
 in 1973. To use this API you have to create an account on
 https://api.insee.fr/
 
-The python library \`\ ``api_insee`` is a help to request the API Sirene
-in perfect simplicity. You'll find more information about the API in the
+The python library ``api_insee`` is a help to request the API Sirene in
+perfect simplicity. You'll find more information about the API in the
 `official
 documentation <https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/pages/item-info.jag?name=Sirene&version=V3&provider=insee>`__
 

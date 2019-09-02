@@ -2,7 +2,7 @@ Python helper to request Sirene API
 
 API Sirene give access to French companies and business database. Entities are recorded since the creation of this administrative register in 1973. To use this API you have to create an account on https://api.insee.fr/
 
-The python library ```api_insee`` is a help to request the API Sirene in perfect simplicity. You'll find more information about the API in the [official documentation](https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/pages/item-info.jag?name=Sirene&version=V3&provider=insee)
+The python library ```api_insee``` is a help to request the API Sirene in perfect simplicity. You'll find more information about the API in the [official documentation](https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/pages/item-info.jag?name=Sirene&version=V3&provider=insee)
 
 #### Installation
 
@@ -106,9 +106,9 @@ data = api.siren(q=-Field('codeCommuneEtablissement', 92046)).get()
 
 |Type|Description|Example|
 |----|-----------|-------|
-|FieldExact| Search on an exact value |```FieldExact('demoninationUniteLegale','LE TIMBRE'))```
-|Periodic| Search on periodic field |```Periodic(Field('activitePrincipaleUniteLegale','84.23Z') | Field('activitePrincipaleUniteLegale','86.21Z')))```
-|Range| Search in a range of values |```Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')```
+|FieldExact| Search on an exact value |```FieldExact('demoninationUniteLegale','LE TIMBRE'))```|
+|Periodic| Search on periodic field |```Periodic(Field('activitePrincipaleUniteLegale','84.23Z') | Field('activitePrincipaleUniteLegale','86.21Z')))```|
+|Range| Search in a range of values |```Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')```|
 
 ----------------
 
