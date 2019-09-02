@@ -105,6 +105,7 @@ data = api.siren(q=-Field('codeCommuneEtablissement', 92046)).get()
 
 # Request executed:
 # /?q=codeCommuneEtablissement:92046 OR unitePurgeeUniteLegale:True
+# /?q=-codeCommuneEtablissement:92046
 ```
 
 ##### Special Search

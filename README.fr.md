@@ -47,7 +47,7 @@ data = api.siren('005520135', date='2018-01-01').get()
 # https://api.insee.fr/entreprises/sirene/V3/siren/005520135?date=2018-01-01
 ```
 
-* Faire une Recherche avancée sur des critères donnés, en utilisant le paramètre ```q=```
+* Faire une recherche avancée sur des critères donnés, en utilisant le paramètre ```q=```
 
 ```python
 data = api.siren(q='unitePurgeeUniteLegage:True').get()
@@ -100,17 +100,18 @@ data = api.siren(q=(
 
 data = api.siren(q=-Field('codeCommuneEtablissement', 92046)).get()
 
-# Requête envoyée:
+# Requêtes envoyées:
 # /?q=codeCommuneEtablissement:92046 OR unitePurgeeUniteLegale:True
+# /?q=-codeCommuneEtablissement:92046
 ```
 
 ##### Recherches spéciales
 
 |Type|Description|Exemple|
 |----|-----------|-------|
-|FieldExact| Recherche la valeur exact|```FieldExact('demoninationUniteLegale','LE TIMBRE'))```
-|Periodic| Recherche sur un champ périodique|```Periodic(Field('activitePrincipaleUniteLegale','84.23Z') | Field('activitePrincipaleUniteLegale','86.21Z')))```
-|Range| Recherche sur un interval|```Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')```
+|FieldExact| Recherche la valeur exact|```FieldExact('demoninationUniteLegale','LE TIMBRE'))```|
+|Periodic| Recherche sur un champ périodique|```Periodic(Field('activitePrincipaleUniteLegale','84.23Z') | Field('activitePrincipaleUniteLegale','86.21Z')))```|
+|Range| Recherche sur un interval|```Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')```|
 
 ----------------
 
