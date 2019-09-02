@@ -1,121 +1,79 @@
-## API Insee
-
 Python helper to request Sirene API
 
-API Sirene give access to French companies and business database. Entities are recorded since the creation
-of this administrative register in 1973. To use this API you have to create an account on <https://api.insee.fr/>
+API Sirene give access to French companies and business database. Entities are recorded since the creation of this administrative register in 1973. To use this API you have to create an account on https://api.insee.fr/
 
-You will find the official documentation [here](https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/pages/item-info.jag?name=Sirene&version=V3&provider=insee). All examples described here comes from the official documentation.
-
+The python library ```api_insee`` is a help to request the API Sirene in perfect simplicity. You'll find more information about the API in the [official documentation](https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/pages/item-info.jag?name=Sirene&version=V3&provider=insee)
 
 #### Installation
 
-You can install the helper with pip
+From a terminal :
 
 `pip install api-insee`
 
-To use the api within a python script
+To request the API you must create a consummer account on [api.insee.fr](https://api.insee.fr).
+Then with your access keys :
 
 ```python
 from api_insee import ApiInsee
 
 api = ApiInsee(
-    key = # your consumer key,
-    secret = # your consumer secret
+    key = # consummer key,
+    secret = # secret key
 )
 ```
+---------------------------
 
-#### Siren and Siret service
+#### Request samples
 
-To get information about a siren number
+* Fetch data from a siret or sirene number
 
 ```python
 data = api.siren('005520135').get()
-```
-
-This simple code call ```https://api.insee.fr/entreprises/sirene/V3/siren/005520135``` and return these data :
-
-```json
-{
-  "header": {
-    "statut": 200,
-    "message": "OK"
-  },
-  "uniteLegale": {
-    "siren": "005520135",
-    ...
-    "periodesUniteLegale": [
-      {
-        "dateFin": null,
-        "dateDebut": "2007-11-19",
-        "etatAdministratifUniteLegale": "C",
-        "changementEtatAdministratifUniteLegale": true,
-        "nomUniteLegale": null,
-        ...
-      }
-      ...
-    ]
-  }
-}
-```
-
-The same logic for a siret number
-
-```python
 data = api.siret('39860733300059').get()
-# call https://api.insee.fr/entreprises/sirene/V3/siret/39860733300059
+
+
+# Request executed:
+# https://api.insee.fr/entreprises/sirene/V3/siren/005520135
+# https://api.insee.fr/entreprises/sirene/V3/siret/39860733300059
 ```
 
-#### Request Params
-
-To pass url params to your request use keyword argument
+* Set parameters to the request:
 
 ```python
 data = api.siren('005520135', date='2018-01-01').get()
+
+# Request executed:
 # https://api.insee.fr/entreprises/sirene/V3/siren/005520135?date=2018-01-01
 ```
 
-#### Multicriteria search
-
-Sirene API let you search entities using 'q' url parameter. For example
-to get all siren entities with `codeCommuneEtablissement` egal to `92046` you can do this request
+* Perform an advanced search on given criteria using ```q=``` parameter
 
 ```python
 data = api.siren(q='unitePurgeeUniteLegage:True').get()
 ```
+--------------------------------
 
-`api_insee` comes with `Criteria` to help you to write theses requests.
+##### Advanced search on criteria
 
-```python
-import api_insee.criteria as Criteria
-```
+Class in ```api_insee.criteria``` let you construct advanced searchs easily. All variables available are described in the [official documentation](https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/templates/api/documentation/download.jag?tenant=carbon.super&resourceUrl=/registry/resource/_system/governance/apimgt/applicationdata/provider/insee/Sirene/V3/documentation/files/INSEE%20Documentation%20API%20Sirene%20Variables-V3.7.pdf)
 
-##### Criteria.Field
 
-search on a specific field
+* You can combine several criteria in one request.
 
 ```python
-data = api.siren(q=Criteria.Field('unitePurgeeUniteLegale', True)).get()
-
-# will search on all entities with unitePurgeeUniteLeage=True
-# /?q=unitePurgeeUniteLegale:True
-```
-
-you can combine several criteria together. By default the `AND` operator
-is used between each criteria.
-
-```python
+from api_insee.criteria import Field
 
 data = api.siren(q=(
-    Critera.Field('codeCommuneEtablissement', 92046),
-    Criteria.Field('unitePurgeeUniteLegale', True)
+    Field('codeCommuneEtablissement', 92046),
+    Field('unitePurgeeUniteLegale', True)
 )).get()
 
-# /?q=codeCommuneEtablissement:92046 AND unitePurgeeUniteLegale:True
 
+# Request executed:
+# /?q=codeCommuneEtablissement:92046 AND unitePurgeeUniteLegale:True
 ```
 
-or you can use a dictionnary to search on multiple fields
+* Or using a dictionnary
 
 ```python
 
@@ -124,73 +82,48 @@ data = api.siren(q={
     'unitePurgeeUniteLegale' : True
 }).get()
 
+
+# Request executed:
 # /?q=codeCommuneEtablissement:92046 AND unitePurgeeUniteLegale:True
 
 ```
 
-You can use ```|``` and ```&``` logical operator to specify your requests
+* Use logical operator  ```|```, ```&```, ```- (not)```  to specify your requests.
 
 ```python
+
 data = api.siren(q=(
-    Criteria.Field('codeCommuneEtablissement', 92046) | Criterial.Field('unitePurgeeUniteLegale', True)
+    Field('codeCommuneEtablissement', 92046) | Field('unitePurgeeUniteLegale', True)
 )).get()
 
+data = api.siren(q=-Field('codeCommuneEtablissement', 92046)).get()
+
+# Request executed:
 # /?q=codeCommuneEtablissement:92046 OR unitePurgeeUniteLegale:True
 ```
 
-`-` is used as `NOT` operator
+##### Special Search
 
-```python
-data = api.siren(q=-Criteria.Field('codeCommuneEtablissement', 92046)).get()
+|Type|Description|Example|
+|----|-----------|-------|
+|FieldExact| Search on an exact value |```FieldExact('demoninationUniteLegale','LE TIMBRE'))```
+|Periodic| Search on periodic field |```Periodic(Field('activitePrincipaleUniteLegale','84.23Z') | Field('activitePrincipaleUniteLegale','86.21Z')))```
+|Range| Search in a range of values |```Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')```
 
-# /?q=-codeCommuneEtablissement:92046
-```
-
-##### Criteria.FieldExact
-
-To search a field on an exact value
-
-```python
-data = api.siren(q=Criteria.FieldExact('demoninationUniteLegale','LE TIMBRE')).get()
-# /?q=demoninationUniteLegale:"LE TIMBRE"
-```
-
-##### Criteria.Periodic
-
-Periodic Field can be search with `Criteria.Periodic`
-
-```python
-
-data = api.siren(q= Criteria.Periodic(
-    Criteria.Field('activitePrincipaleUniteLegale','84.23Z') |
-    Criteria.Field('activitePrincipaleUniteLegale','86.21Z')
-)).get()
-
-# /?q=periode(activitePrincipaleUniteLegale:84.23Z OR activitePrincipaleUniteLegale:86.21Z)
-```
-
-##### Criteria.Range
-
-to search on a specific range of values
-
-```python
-data = api.siren(q=Criteria.Range('nomUsageUniteLegale', 'DUPONT', 'DURANT'))
-# /?q=nomUsageUniteLegale:[DUPONT TO DURANT]
-
-data = api.siren(q=Criteria.Range('nomUsageUniteLegale', 'DUPONT', 'DURANT', exclude=True))
-# /?q=nomUsageUniteLegale:%7BDUPONT TO DURANT%7D
-```
+----------------
 
 #### Pagination
 
-The `pages()` method return an iterator to let you fetch pages from the api. To specify the number of results per page use the `nombre` argument. Results are limited by 10000 per pages.
+The ``pages()`` method return an iterator to let you fetch pages from
+the api. To specify the number of results per page use the ``nombre``
+argument. Results are limited by 10000 per pages.
 
 ```python
 from api_insee import ApiInsee
 
 api = ApiInsee(
-    key = 'YOUR-KEY',
-    secret = 'YOUR-SECRET
+    key = # consummer key,
+    secret = # secret key
 )
 
 request = api.siren(q={
@@ -198,4 +131,5 @@ request = api.siren(q={
 })
 
 for (page_index, page_result) in enumerate(request.pages(nombre=1000)):
-    # process page_result
+    # process here
+```
