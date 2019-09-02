@@ -1,5 +1,6 @@
+**[🇫🇷 Français](https://github.com/sne3ks/api_insee/blob/master/README.fr.md)**
+
 Python helper to request Sirene API
-** [🇫🇷 Français](https://github.com/sne3ks/api_insee/blob/master/README.fr.md) **
 
 API Sirene give access to French companies and business database. Entities are recorded since the creation of this administrative register in 1973. To use this API you have to create an account on https://api.insee.fr/
 
