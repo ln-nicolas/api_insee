@@ -58,7 +58,7 @@ data = api.siren(q='unitePurgeeUniteLegage:True').get()
 ```
 --------------------------------
 
-##### Advanced search on criteria
+#### Advanced search on criteria
 
 Class in ```api_insee.criteria``` let you construct advanced searchs easily. All variables available are described in the [official documentation](https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/templates/api/documentation/download.jag?tenant=carbon.super&resourceUrl=/registry/resource/_system/governance/apimgt/applicationdata/provider/insee/Sirene/V3/documentation/files/INSEE%20Documentation%20API%20Sirene%20Variables-V3.7.pdf)
 
