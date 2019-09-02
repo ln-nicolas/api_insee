@@ -1,4 +1,6 @@
-Python helper to request Sirene API
+Python helper to request Sirene API \*\* `🇫🇷
+Français <https://github.com/sne3ks/api_insee/blob/master/README.fr.md>`__
+\*\*
 
 API Sirene give access to French companies and business database.
 Entities are recorded since the creation of this administrative register
@@ -60,6 +62,9 @@ Request samples
 .. code:: python
 
     data = api.siren(q='unitePurgeeUniteLegage:True').get()
+
+    # Request executed:
+    # /?q=unitePurgeeUniteLegage:True
 
 --------------
 
