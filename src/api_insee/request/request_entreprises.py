@@ -17,6 +17,12 @@ class RequestEntrepriseService(RequestService):
 
     def __init__(self, *args, **kwargs):
 
+        champs = kwargs.get('champs', False)
+        if champs and isinstance(champs, list):
+            kwargs.update({
+                'champs' : ",".join(champs)
+            })
+
         self.reference = False
         if len(args) and isinstance(args[0], str):
             self.reference = args[0]

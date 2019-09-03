@@ -56,6 +56,22 @@ data = api.siren(q='unitePurgeeUniteLegage:True').get()
 # Request executed:
 # /?q=unitePurgeeUniteLegage:True
 ```
+
+* Filter fields in the response
+
+```python
+champs = [
+    'siret',
+    'denominationUniteLegale',
+    'nomUsageUniteLegale',
+    'prenom1UniteLegale',
+]
+
+request = api.siret('39860733300059', champs=champs)
+# Request executed:
+# /39860733300059?champs=siret,denominationUniteLegale,nomUsageUniteLegale,prenom1UniteLegale
+```
+
 --------------------------------
 
 #### Advanced search on criteria

@@ -105,6 +105,21 @@ data = api.siren(q=-Field('codeCommuneEtablissement', 92046)).get()
 # /?q=-codeCommuneEtablissement:92046
 ```
 
+* Filtrer les champs retournés par la réponse
+
+```python
+champs = [
+    'siret',
+    'denominationUniteLegale',
+    'nomUsageUniteLegale',
+    'prenom1UniteLegale',
+]
+
+request = api.siret('39860733300059', champs=champs)
+# Request executed:
+# /39860733300059?champs=siret,denominationUniteLegale,nomUsageUniteLegale,prenom1UniteLegale
+```
+
 ##### Recherches spéciales
 
 |Type|Description|Exemple|

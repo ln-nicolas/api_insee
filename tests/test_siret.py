@@ -44,14 +44,13 @@ def test_siret_search_with_champs(execute_request):
         'denominationUniteLegale',
         'nomUsageUniteLegale',
         'prenom1UniteLegale',
-        #'enseigne1Etablissement'
     ]
 
-    request = api.siret('39860733300059', champs=",".join(champs))
+    request = api.siret('39860733300059', champs=champs)
     assert request.url == base_siret_url + '/39860733300059?champs=siret,denominationUniteLegale,nomUsageUniteLegale,prenom1UniteLegale'
 
     execute_request(request)
-    
+
 
 def test_siret_search_with_2_criteria(execute_request):
 

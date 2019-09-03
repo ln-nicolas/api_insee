@@ -1,6 +1,7 @@
-Python helper to request Sirene API \*\* `🇫🇷
-Français <https://github.com/sne3ks/api_insee/blob/master/README.fr.md>`__
-\*\*
+**`🇫🇷
+Français <https://github.com/sne3ks/api_insee/blob/master/README.fr.md>`__**
+
+Python helper to request Sirene API
 
 API Sirene give access to French companies and business database.
 Entities are recorded since the creation of this administrative register
@@ -66,10 +67,25 @@ Request samples
     # Request executed:
     # /?q=unitePurgeeUniteLegage:True
 
+-  Filter fields in the response
+
+.. code:: python
+
+    champs = [
+        'siret',
+        'denominationUniteLegale',
+        'nomUsageUniteLegale',
+        'prenom1UniteLegale',
+    ]
+
+    request = api.siret('39860733300059', champs=champs)
+    # Request executed:
+    # /39860733300059?champs=siret,denominationUniteLegale,nomUsageUniteLegale,prenom1UniteLegale
+
 --------------
 
 Advanced search on criteria
-'''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Class in ``api_insee.criteria`` let you construct advanced searchs
 easily. All variables available are described in the `official
@@ -118,6 +134,7 @@ documentation <https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/t
 
     # Request executed:
     # /?q=codeCommuneEtablissement:92046 OR unitePurgeeUniteLegale:True
+    # /?q=-codeCommuneEtablissement:92046
 
 Special Search
 ''''''''''''''
