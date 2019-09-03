@@ -128,9 +128,9 @@ data = api.siren(q=-Field('codeCommuneEtablissement', 92046)).get()
 
 |Type|Description|Example|
 |----|-----------|-------|
-|FieldExact| Search on an exact value |```FieldExact('demoninationUniteLegale','LE TIMBRE'))```|
-|Periodic| Search on periodic field |```Periodic(Field('activitePrincipaleUniteLegale','84.23Z') | Field('activitePrincipaleUniteLegale','86.21Z')))```|
-|Range| Search in a range of values |```Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')```|
+|FieldExact| Search on an exact value |FieldExact('demoninationUniteLegale','LE TIMBRE'))|
+|Periodic| Search on periodic field |Periodic(Field('activitePrincipaleUniteLegale','84.23Z') | Field('activitePrincipaleUniteLegale','86.21Z')))|
+|Range| Search in a range of values |Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')|
 
 ----------------
 

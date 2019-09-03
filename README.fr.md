@@ -124,9 +124,9 @@ request = api.siret('39860733300059', champs=champs)
 
 |Type|Description|Exemple|
 |----|-----------|-------|
-|FieldExact| Recherche la valeur exact|```FieldExact('demoninationUniteLegale','LE TIMBRE'))```|
-|Periodic| Recherche sur un champ périodique|```Periodic(Field('activitePrincipaleUniteLegale','84.23Z') | Field('activitePrincipaleUniteLegale','86.21Z')))```|
-|Range| Recherche sur un interval|```Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')```|
+|FieldExact| Recherche la valeur exact|FieldExact('demoninationUniteLegale','LE TIMBRE'))|
+|Periodic| Recherche sur un champ périodique|Periodic(Field('activitePrincipaleUniteLegale','84.23Z') | Field('activitePrincipaleUniteLegale','86.21Z')))|
+|Range| Recherche sur un interval|Range('nomUsageUniteLegale', 'DUPONT', 'DURANT')|
 
 ----------------
 

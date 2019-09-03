@@ -142,36 +142,30 @@ Special Search
 +-------+--------------+----------+
 | Type  | Description  | Example  |
 +=======+==============+==========+
-| Field | Search on an | ``FieldE |
-| Exact | exact value  | xact('de |
-|       |              | moninati |
-|       |              | onUniteL |
+| Field | Search on an | FieldExa |
+| Exact | exact value  | ct('demo |
+|       |              | nination |
+|       |              | UniteLeg |
+|       |              | ale','LE |
+|       |              | TIMBRE') |
+|       |              | )        |
++-------+--------------+----------+
+| Perio | Search on    | Periodic |
+| dic   | periodic     | (Field(' |
+|       | field        | activite |
+|       |              | Principa |
+|       |              | leUniteL |
 |       |              | egale',' |
-|       |              | LE TIMBR |
-|       |              | E'))``   |
+|       |              | 84.23Z') |
 +-------+--------------+----------+
-| Perio | Search on    | ``Period |
-| dic   | periodic     | ic(Field |
-|       | field        | ('activi |
-|       |              | tePrinci |
-|       |              | paleUnit |
-|       |              | eLegale' |
-|       |              | ,'84.23Z |
-|       |              | ') | Fie |
-|       |              | ld('acti |
-|       |              | vitePrin |
-|       |              | cipaleUn |
-|       |              | iteLegal |
-|       |              | e','86.2 |
-|       |              | 1Z')))`` |
-+-------+--------------+----------+
-| Range | Search in a  | ``Range( |
-|       | range of     | 'nomUsag |
-|       | values       | eUniteLe |
-|       |              | gale', ' |
-|       |              | DUPONT', |
-|       |              |  'DURANT |
-|       |              | ')``     |
+| Range | Search in a  | Range('n |
+|       | range of     | omUsageU |
+|       | values       | niteLega |
+|       |              | le',     |
+|       |              | 'DUPONT' |
+|       |              | ,        |
+|       |              | 'DURANT' |
+|       |              | )        |
 +-------+--------------+----------+
 
 --------------
