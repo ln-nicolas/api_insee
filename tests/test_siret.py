@@ -201,3 +201,19 @@ def test_siret_search_with_excluding_borne(execute_request):
     assert request.url == base_siret_url + '?q=nomUsageUniteLegale:{DUPONT TO DURANT}'
 
     execute_request(request)
+
+def test_siret_multi_unit():
+
+    data = api.siret(q='codeCommuneEtablissement:92046', nombre=1000).get()
+
+    _list = []
+    for unit in data['etablissements']:
+        _list.append(unit['siret'])
+
+    data = api.siret(_list, nombre=1000)
+    data = data.get()
+    units = data['etablissements']
+
+    assert len(units) == 1000
+    for unit in units:
+        assert unit['siret'] in _list

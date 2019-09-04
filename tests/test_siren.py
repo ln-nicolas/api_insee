@@ -87,3 +87,19 @@ def test_siren_search_exact_field(execute_request):
 
     execute_request(request)
 
+def test_siren_multi_unit():
+
+    data = api.siren(q={
+        'categorieEntreprise': 'PME'
+    }, nombre=1000).get()
+
+    _list = []
+    for unit in data['unitesLegales']:
+        _list.append(unit['siren'])
+
+    data = api.siren(_list, nombre=1000).get()
+    units = data['unitesLegales']
+
+    assert len(units) == 1000
+    for unit in units:
+        assert unit['siren'] in _list

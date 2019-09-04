@@ -34,13 +34,18 @@ class RequestService(object):
     def useToken(self, token):
         self.token = token
 
-    def get(self, format=None):
+    def get(self, format=None, method='get'):
 
         if format:
             self.format = format
 
         try:
-            request  = self.getRequest()
+
+            if method == 'get':
+                request = self.getRequest()
+            elif method == 'post':
+                request = self.postRequest()
+
             gcontext = ssl.SSLContext()
             response = ur.urlopen(request, context=gcontext)
             return self.formatResponse(response)
@@ -55,6 +60,20 @@ class RequestService(object):
             self.url_encoded,
             data    = self.data,
             headers = self.header
+        )
+
+    def postRequest(self):
+
+        header = self.header
+        header.update({
+            'Content-Type': 'application/x-www-form-urlencoded'
+        })
+        data = up.urlencode(self._url_params).encode('utf-8')
+
+        return ur.Request(
+            self.url_path,
+            data=data,
+            headers = header
         )
 
     def formatResponse(self, response):

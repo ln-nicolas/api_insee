@@ -36,7 +36,6 @@ def test_request_first_pages(execute_request):
     assert first['header']['curseur'] == '*'
     assert first['header']['curseurSuivant']
 
-    execute_request(request)
 
 def test_request_iterate_on_pages(execute_request):
 
@@ -52,4 +51,3 @@ def test_request_iterate_on_pages(execute_request):
 
 
     assert cursors[0] != cursors[1] and cursors[1] != cursors[2]
-

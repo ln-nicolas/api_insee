@@ -30,6 +30,15 @@ class RequestEntrepriseService(RequestService):
 
         super(RequestEntrepriseService, self).__init__(*args, **kwargs)
 
+    def get(self, format=None, method=None):
+
+        if self._url_params.get('q', False) and not method:
+            method = 'post'
+        else:
+            method = method or 'get'
+
+        return super(RequestEntrepriseService, self).get(format=format, method=method)
+
     @property
     def url_path(self):
 
@@ -52,7 +61,7 @@ class RequestEntrepriseService(RequestService):
 
         while cursor != next_cursor:
             self.set_url_params('curseur', next_cursor)
-            page = self.get()
+            page = self.get(method='get')
 
             yield page
 
@@ -64,5 +73,24 @@ class RequestEntrepriseService(RequestService):
 class RequestEntrepriseServiceSiren(RequestEntrepriseService):
     path = API_VERSION['path_siren']
 
+    def __init__(self, *args, **kwargs):
+
+        if len(args) and isinstance(args[0], list):
+            kwargs.update({
+                'q' : " OR ".join([ 'siren:'+siren for siren in args[0] ])
+            })
+
+        super(RequestEntrepriseServiceSiren, self).__init__(*args, **kwargs)
+
+
 class RequestEntrepriseServiceSiret(RequestEntrepriseService):
     path = API_VERSION['path_siret']
+
+    def __init__(self, *args, **kwargs):
+
+        if len(args) and isinstance(args[0], list):
+            kwargs.update({
+                'q' : " OR ".join([ 'siret:'+siret for siret in args[0] ])
+            })
+
+        super(RequestEntrepriseServiceSiret, self).__init__(*args, **kwargs)
