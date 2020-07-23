@@ -94,3 +94,13 @@ class RequestEntrepriseServiceSiret(RequestEntrepriseService):
             })
 
         super(RequestEntrepriseServiceSiret, self).__init__(*args, **kwargs)
+
+
+class RequestEntrepriseServiceLiensSuccession(RequestEntrepriseService):
+    path = API_VERSION['path_liens_succession']
+
+    def __init__(self, *args, **kwargs):
+        super(RequestEntrepriseServiceLiensSuccession, self).__init__(*args, **kwargs)  
+
+    def get(self, format=None, method=None):
+        return super(RequestEntrepriseService, self).get(format=format, method='get')  

@@ -1,5 +1,8 @@
+from api_insee.request.request_entreprises import (
+    RequestEntrepriseServiceLiensSuccession, RequestEntrepriseServiceSiren,
+    RequestEntrepriseServiceSiret)
 from api_insee.utils.auth_service import AuthService, MockAuth
-from api_insee.request.request_entreprises import RequestEntrepriseServiceSiren, RequestEntrepriseServiceSiret
+
 
 class ApiInsee():
 
@@ -16,6 +19,7 @@ class ApiInsee():
 
         self.use('siren', RequestEntrepriseServiceSiren)
         self.use('siret', RequestEntrepriseServiceSiret)
+        self.use('liens_succession', RequestEntrepriseServiceLiensSuccession)
 
     def use(self, serviceName, requestService):
 

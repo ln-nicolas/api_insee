@@ -45,7 +45,6 @@ class RequestService(object):
                 request = self.getRequest()
             elif method == 'post':
                 request = self.postRequest()
-
             gcontext = ssl.SSLContext()
             response = ur.urlopen(request, context=gcontext)
             return self.formatResponse(response)
