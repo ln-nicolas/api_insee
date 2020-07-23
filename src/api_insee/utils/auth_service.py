@@ -17,3 +17,14 @@ class AuthService():
     def generateToken(self):
         data = RequestTokenService(self.credentials).get()
         self.token = ClientToken(**data)
+
+
+class MockAuth(AuthService):
+
+    def __init__(self):
+        self.token = ClientToken(
+            token_type='Bearer',
+            expires_in=100000,
+            access_token='No Auth',
+            scope='No Scope'
+        )

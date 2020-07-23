@@ -1,14 +1,17 @@
-from api_insee.utils.auth_service import AuthService
+from api_insee.utils.auth_service import AuthService, MockAuth
 from api_insee.request.request_entreprises import RequestEntrepriseServiceSiren, RequestEntrepriseServiceSiret
 
 class ApiInsee():
 
-    def __init__(self, key, secret, format='json'):
+    def __init__(self, key, secret, format='json', noauth=False):
 
-        self.auth = AuthService(
-            key = key,
-            secret = secret
-        )
+        if noauth:
+            self.auth = MockAuth()
+        else:
+            self.auth = AuthService(
+                key = key,
+                secret = secret
+            )
         self.format = format
 
         self.use('siren', RequestEntrepriseServiceSiren)

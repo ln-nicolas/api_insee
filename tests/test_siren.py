@@ -14,14 +14,10 @@ __author__ = "Lenselle Nicolas"
 __copyright__ = "Lenselle Nicolas"
 __license__ = "mit"
 
-api = ApiInsee(
-    key = conf.SIRENE_API_CONSUMER_KEY,
-    secret = conf.SIRENE_API_CONSUMER_SECRET
-)
-
 base_siren_url = API_VERSION['url'] + API_VERSION['path_siren']
 
-def test_siren_search(execute_request):
+@pytest.mark.http
+def test_siren_search(api, execute_request):
 
     request = api.siren('809893225')
     unit    = request.get()
@@ -32,7 +28,8 @@ def test_siren_search(execute_request):
 
     execute_request(request)
 
-def test_siren_raw_search(execute_request):
+@pytest.mark.http
+def test_siren_raw_search(api, execute_request):
 
     criteria = Criteria.Raw('unitePurgeeUniteLegale:True')
     request  = api.siren(q=criteria)
@@ -44,7 +41,8 @@ def test_siren_raw_search(execute_request):
     execute_request(request)
 
 
-def test_siren_search_by_field(execute_request):
+@pytest.mark.http
+def test_siren_search_by_field(api, execute_request):
 
     criteria = Criteria.Field('unitePurgeeUniteLegale',True)
     request  = api.siren(q=criteria)
@@ -55,8 +53,7 @@ def test_siren_search_by_field(execute_request):
 
     execute_request(request)
 
-
-def test_siren_search_date(execute_request):
+def test_siren_search_date(api, execute_request):
 
     request = api.siren('005520135', date='2018-01-01')
 
@@ -66,7 +63,7 @@ def test_siren_search_date(execute_request):
 
 
 
-def test_siren_search_with_period_variable(execute_request):
+def test_siren_search_with_period_variable(api, execute_request):
 
     request = api.siren(
         q=Criteria.PeriodicField('etatAdministratifUniteLegale','C')
@@ -77,7 +74,7 @@ def test_siren_search_with_period_variable(execute_request):
     execute_request(request)
 
 
-def test_siren_search_exact_field(execute_request):
+def test_siren_search_exact_field(api, execute_request):
 
     request = api.siren(
         q=Criteria.Periodic(Criteria.FieldExact('denominationUniteLegale','LE TIMBRE'))
@@ -87,7 +84,8 @@ def test_siren_search_exact_field(execute_request):
 
     execute_request(request)
 
-def test_siren_multi_unit():
+@pytest.mark.http
+def test_siren_multi_unit(api):
 
     data = api.siren(q={
         'categorieEntreprise': 'PME'

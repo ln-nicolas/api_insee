@@ -53,3 +53,5 @@ MANIFEST
 ./tests/conftest.py
 
 tests/conftest.py
+
+env/

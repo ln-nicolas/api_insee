@@ -14,14 +14,10 @@ __author__ = "Lenselle Nicolas"
 __copyright__ = "Lenselle Nicolas"
 __license__ = "mit"
 
-api = ApiInsee(
-    key = conf.SIRENE_API_CONSUMER_KEY,
-    secret = conf.SIRENE_API_CONSUMER_SECRET
-)
-
 base_siren_url = API_VERSION['url'] + API_VERSION['path_siren']
 
-def test_request_first_pages(execute_request):
+@pytest.mark.http
+def test_request_first_pages(api, execute_request):
 
     request = api.siren(
         Criteria.Raw('*')
@@ -37,7 +33,8 @@ def test_request_first_pages(execute_request):
     assert first['header']['curseurSuivant']
 
 
-def test_request_iterate_on_pages(execute_request):
+@pytest.mark.http
+def test_request_iterate_on_pages(api, execute_request):
 
     request = api.siren(
         Criteria.Raw('*')

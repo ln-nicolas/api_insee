@@ -16,6 +16,7 @@ def test_missing_credentials():
     with pytest.raises(AuthExeption):
         api = ApiInsee(False, False)
 
+@pytest.mark.http
 def test_unauthorized_credentials():
 
     with pytest.raises(AuthExeption):
@@ -24,6 +25,7 @@ def test_unauthorized_credentials():
             secret= conf.SIRENE_API_CONSUMER_SECRET
         )
 
+@pytest.mark.http
 def test_generate_token():
 
     api = ApiInsee(
